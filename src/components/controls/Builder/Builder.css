@@ -4,19 +4,20 @@
     align-items: center;
     margin: 12px 0;
 }
-.builder button{
+.builder-button{
     display: block;
     font: inherit;
     padding: 5px;
     max-width: 0 12px;
     width: 80px;
-    background-color: '#9c27b0';
+    background-color: rebeccapurple;
     color: '#ffffff';
     border: none;
     border-radius: 3px;
     outline: none;
+    margin: 1rem;
 }
-.builder div{
+.builder-div{
     color: '#8e24aa';
     margin: 0 12px;
 }
