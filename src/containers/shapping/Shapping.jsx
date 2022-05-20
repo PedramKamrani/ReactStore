@@ -3,24 +3,31 @@ import Modal from './../../components/UI/Modal/Modal';
 import Controls from '../../components/controls/Controls';
 import Order from '../../components/Order/Order';
 import { Component } from 'react';
+import Loader from '../../components/UI/Loader/Loader';
+import axios from './../../axios-order';
 const prices = {
     product1: 59,
     product2: 30,
     product3: 88,
 };
 
-
-class Shapping extends Component{
+class Shapping extends Component {
     state = {
-        Products: {
-            product1: 0,
-            product2: 0,
-            product3: 0,
-        },
+        Products: null,
         totalPrice: 0,
         purchased: false,
+        loading: false,
     };
-
+    componentDidMount() {
+        axios.get('https://pedram-c9ce9-default-rtdb.firebaseio.com/products.json')
+            .then((respose) => {
+               
+                this.setState({ Products: respose.data });
+            })
+            .catch((error) => {
+                console.log('error data fetch');
+            });
+    }
     addProducthandler = (type) => {
         const prevCount = this.state.Products[type];
         const newCount = prevCount + 1;
@@ -56,10 +63,50 @@ class Shapping extends Component{
     PurcherBackHandler = () => {
         this.setState({ purchased: false });
     };
-    purcherCountinue=()=>{
-        console.log('countinue');
-    }
+    purcherCountinue = () => {
+        this.setState({ loading: true });
+        const order = {
+            products: this.state.Products,
+            totalPrice: this.state.totalPrice,
+            customer: {
+                name: 'pedram',
+                code: 123,
+            },
+        };
+        axios
+            .post('/orders.json', order)
+            .then((response) => {
+                this.setState({ loading: true, purchased: false });
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
+    };
     render() {
+        let order = null;
+
+        if (this.state.loading) {
+            order = <Loader />;
+        }
+        let controls = <Loader />
+
+        if (this.state.Products) {
+           controls= <Controls
+                addProduct={this.addProducthandler}
+                removeProduct={this.RemoveProduct}
+                price={this.state.totalPrice}
+                order={this.purchasedHandler}
+            />;
+
+            order = (
+                <Order
+                    products={this.state.Products}
+                    countinue={this.purcherCountinue}
+                    cancel={this.PurcherBackHandler}
+                    totalePrice={this.state.totalPrice}
+                />
+            );
+        }
         return (
             <Wrapper>
                 <div>
@@ -67,19 +114,9 @@ class Shapping extends Component{
                         show={this.state.purchased}
                         modalClose={this.PurcherBackHandler}
                     >
-                        <Order
-                         products={this.state.Products}
-                         countinue={this.purcherCountinue}
-                         cancel={this.PurcherBackHandler}
-                         totalePrice={this.state.totalPrice}
-                          />
+                        {order}
                     </Modal>
-                    <Controls
-                        addProduct={this.addProducthandler}
-                        removeProduct={this.RemoveProduct}
-                        price={this.state.totalPrice}
-                        order={this.purchasedHandler}
-                    />
+                    {controls}
                 </div>
             </Wrapper>
         );
