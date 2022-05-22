@@ -3,6 +3,9 @@ import Wrapper  from './../../hoc/Wrapper'
 const Account = () => {
   return (
     <Wrapper>
+      <form>
+        
+      </form>
       <p>Account</p>
     </Wrapper>
   );

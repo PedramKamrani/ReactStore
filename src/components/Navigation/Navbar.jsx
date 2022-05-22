@@ -7,7 +7,7 @@ const Navbar = (props) => {
     <NavItems/>
     </nav>
 </header>
-     );
+     )
 }
  
 export default Navbar;

@@ -6,7 +6,7 @@ const NavItems = () => {
       <Navitem link="/">shapping</Navitem>
       <Navitem link="/account">Account</Navitem>
     </ul>
-  );
-};
+  )
+}
 
 export default NavItems;

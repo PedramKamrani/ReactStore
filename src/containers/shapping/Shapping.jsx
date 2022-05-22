@@ -5,6 +5,7 @@ import Order from "../../components/Order/Order";
 import { Component } from "react";
 import Loader from "../../components/UI/Loader/Loader";
 import axios from "./../../axios-order";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const prices = {
   product1: 59,
@@ -12,7 +13,7 @@ const prices = {
   product3: 88,
 };
 
-export class Shapping extends Component {
+class _Shapping extends Component {
   state = {
     Products: null,
     totalPrice: 0,
@@ -65,23 +66,26 @@ export class Shapping extends Component {
     this.setState({ purchased: false });
   };
   purcherCountinue = () => {
-    this.setState({ loading: true });
-    const order = {
-      products: this.state.Products,
-      totalPrice: this.state.totalPrice,
-      customer: {
-        name: "pedram",
-        code: 123,
-      },
-    };
-    axios
-      .post("/orders.json", order)
-      .then((response) => {
-        this.setState({ loading: true, purchased: false });
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+
+    this.props.navigate('/account')
+    //this.props.history.push('/account')
+    // this.setState({ loading: true });
+    // const order = {
+    //   products: this.state.Products,
+    //   totalPrice: this.state.totalPrice,
+    //   customer: {
+    //     name: "pedram",
+    //     code: 123,
+    //   },
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((response) => {
+    //     this.setState({ loading: true, purchased: false });
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
   };
   render() {
     let order = null;
@@ -125,7 +129,12 @@ export class Shapping extends Component {
     );
   }
 }
+export const Shapping = () => {
+  let location = useLocation();
+  let navigate = useNavigate();
 
+  return <_Shapping location={location} navigate={navigate} />;
+};
 // export const ShappingFn = () => {
 //   const [productsState, setProductState] = useState({
 //     Products: {

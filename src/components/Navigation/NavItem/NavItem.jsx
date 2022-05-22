@@ -5,7 +5,7 @@ const NavItem = (props) => {
     <li className="nav-item">
       <Link to={props.link}>{props.children}</Link>
     </li>
-  );
-};
+  )
+}
 
 export default NavItem;

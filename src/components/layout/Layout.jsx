@@ -8,7 +8,7 @@ const Layout = (props) => {
            <Navbar/>
             <main className='container'>{props.children}</main>
         </Wrapper>
-     );
+     )
 }
  
 export default Layout;

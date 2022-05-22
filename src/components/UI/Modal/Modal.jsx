@@ -15,7 +15,6 @@ const Modal = (props) => {
       >
         {props.children}
       </div>
-      ;
     </Wrapper>
   );
 };
