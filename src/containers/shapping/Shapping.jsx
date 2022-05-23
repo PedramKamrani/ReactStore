@@ -68,24 +68,25 @@ class _Shapping extends Component {
   purcherCountinue = () => {
 
     this.props.navigate('/account')
-    //this.props.history.push('/account')
-    // this.setState({ loading: true });
-    // const order = {
-    //   products: this.state.Products,
-    //   totalPrice: this.state.totalPrice,
-    //   customer: {
-    //     name: "pedram",
-    //     code: 123,
-    //   },
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then((response) => {
-    //     this.setState({ loading: true, purchased: false });
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
+
+    this.setState({ loading: true });
+    const order = {
+      products: this.state.Products,
+      totalPrice: this.state.totalPrice,
+      customer: {
+        name: "pedram",
+        code: 123,
+      },
+    };
+    axios
+      .post("/orders.json", order)
+      .then((response) => {
+        console.log(response.status)
+        this.setState({ loading: true, purchased: false });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
   render() {
     let order = null;
